@@ -1,20 +1,5 @@
-Description:
-Miriam Ertl
-
-InstanceType:
-    Description: Type of EC2 instance
-    Type: String
-
-  VolumeSize:
-    Description: Volume size of EC2 instance
-    Type: String
-
-Resources:
-########################################################
-###                 SecurityGroups                   ###
-########################################################
-
-  KeyName:
+Parameters: 
+ ProjektKey:
     Description: The EC2 Key Pair to allow SSH access to the instance
     Type: 'AWS::EC2::KeyPair::ProjektKey'
 Resources:
