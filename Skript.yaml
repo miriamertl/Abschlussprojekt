@@ -1,0 +1,37 @@
+Description:
+Miriam Ertl
+
+InstanceType:
+    Description: Type of EC2 instance
+    Type: String
+
+  VolumeSize:
+    Description: Volume size of EC2 instance
+    Type: String
+
+Resources:
+########################################################
+###                 SecurityGroups                   ###
+########################################################
+
+  KeyName:
+    Description: The EC2 Key Pair to allow SSH access to the instance
+    Type: 'AWS::EC2::KeyPair::ProjektKey'
+Resources:
+  Ec2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      SecurityGroups:
+        - !Ref InstanceSecurityGroup
+        - ProjectSecurityGroup
+      KeyName: !Ref ProjektKey
+      ImageId:  ami-0474863011a7d1541
+  InstanceSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
