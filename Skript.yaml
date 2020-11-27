@@ -1,17 +1,30 @@
-Parameters: 
- ProjektKey:
-    Description: The EC2 Key Pair to allow SSH access to the instance
-    Type: 'AWS::EC2::KeyPair::ProjektKey'
+Parameters:      
+  KeyName:
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
+    Type: AWS::EC2::KeyPair::KeyName
+  ImageId:
+    Description: ID of machine amazon (AMI)
+    Type: String
+  VolumeSize:
+    Description: Volume size of EC2 instance
+    Type: String
+  InstanceType:
+    Default: t2.micro
+    Description: Type of EC2 instance
+    Type: String
+  SecurityGroupIds:
+    Description: ID of the SecurityGrpou
+    Type: String
 Resources:
-  Ec2Instance:
+  WebServerProjekt:
     Type: 'AWS::EC2::Instance'
     Properties:
-      SecurityGroups:
-        - !Ref InstanceSecurityGroup
-        - ProjectSecurityGroup
-      KeyName: !Ref ProjektKey
-      ImageId:  ami-0474863011a7d1541
-  InstanceSecurityGroup:
+      SecurityGroupIds:
+        - !GetAtt ProjectSecurityGroup.GroupId
+      KeyName: ProjektKey
+      ImageId: ami-0474863011a7d1541
+  ProjectSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
       GroupDescription: Enable SSH access via port 22
@@ -20,3 +33,4 @@ Resources:
           FromPort: '22'
           ToPort: '22'
           CidrIp: 0.0.0.0/0
+          
