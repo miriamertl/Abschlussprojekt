@@ -3,6 +3,9 @@ Parameters:
     ConstraintDescription: must be the name of an existing EC2 KeyPair.
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
     Type: AWS::EC2::KeyPair::KeyName
+  Id:
+    Description: ID of VPC
+    Type: AWS::EC2::VPC::Id
   ImageId:
     Description: ID of machine amazon (AMI)
     Type: String
@@ -16,14 +19,11 @@ Parameters:
   SecurityGroupIds:
     Description: ID of the SecurityGrpou
     Type: String
+Mappings:
+  RegionMap:
+    eu-central-1:
+     AMI: ami-0474863011a7d1541
 Resources:
-  WebServerProjekt:
-    Type: 'AWS::EC2::Instance'
-    Properties:
-      SecurityGroupIds:
-        - !GetAtt ProjectSecurityGroup.GroupId
-      KeyName: ProjektKey
-      ImageId: ami-0474863011a7d1541
   ProjectSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
